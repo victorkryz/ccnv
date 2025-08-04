@@ -2,6 +2,9 @@
 
 #include <cmath>
 #include <stdexcept>
+#include <iostream>
+#include <cstdint>
+#include <iomanip>
 
 class Currency
 {
@@ -23,8 +26,8 @@ public:
         return minor_units_ / std::pow(10.0, precision_);
     }
 
-    std::string get_currency_code_() const { return currency_code_; }
-    int get_precision_() const { return precision_; }
+    std::string get_currency_code() const { return currency_code_; }
+    int get_precision() const { return precision_; }
     int64_t rawMinorUnits() const { return minor_units_; }
 
     Currency operator+(const Currency& other) const
