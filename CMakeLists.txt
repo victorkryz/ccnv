@@ -48,4 +48,6 @@ if(WIN32)
 
 endif()
 
+add_subdirectory(g.tests)
 
+target_include_directories(tests PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src) 
