@@ -16,7 +16,7 @@ using json = nlohmann::json;
 class CurrencyRateService
 {
     inline static constexpr const auto CURR_LIST_REF = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies.json"sv;
-    inline static constexpr const auto CURR_LIST_RATE_BY = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/"sv;
+    inline static constexpr const auto CURR_LIST_RATE_BY_REF = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/"sv;
 
 public:
     using CurrencyList = std::map<std::string, std::string>;

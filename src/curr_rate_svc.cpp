@@ -20,7 +20,7 @@ CurrencyRateService::CurrencyList CurrencyRateService::get_all_curr_list()
 
 std::string CurrencyRateService::compose_rest_request(const std::string& currency)
 {
-    std::string request(CURR_LIST_RATE_BY.data(), CURR_LIST_RATE_BY.size());
+    std::string request(CURR_LIST_RATE_BY_REF.data(), CURR_LIST_RATE_BY_REF.size());
     request += (currency + ".json");
     return request;
 }
