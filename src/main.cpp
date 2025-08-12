@@ -15,7 +15,8 @@ bool process_arguments(int argc, char* argv[], ClArguments& args);
 void show_usage(const cxxopts::Options& options);
 void show_version();
 void print_currencies_list(const CurrencyRateService::CurrencyList& list);
-void print_rating_result(const Currency& value_from, const Currency& value_to, const std::string& date);
+void print_rating_result(const CurrencyRateService::CurrencyRate& rate_info,
+                        const Currency& value_from, const Currency& value_to);
 
 int main(int argc, char* argv[])
 {
@@ -34,13 +35,13 @@ int main(int argc, char* argv[])
             }
             else if (!args.curr_from.empty())
             {
-                const auto rate = rate_svc.rate(args.curr_from, args.curr_to);
+                const auto rate_info = rate_svc.rate(args.curr_from, args.curr_to);
 
-                auto [from, to] = rate.from_to;
+                auto [from, to] = rate_info.from_to;
                 Currency value_from(args.amount, from);
-                Currency value_to = Currency::convert(value_from, to, rate.rate);
+                Currency value_to = Currency::convert(value_from, to, rate_info.rate);
 
-                print_rating_result(value_from, value_to, rate.date);
+                print_rating_result(rate_info, value_from, value_to);
             }
             result = 0;
         }
@@ -66,9 +67,11 @@ void print_currencies_list(const CurrencyRateService::CurrencyList& curr_list)
     }
 }
 
-void print_rating_result(const Currency& value_from, const Currency& value_to, const std::string& date)
+void print_rating_result(const CurrencyRateService::CurrencyRate& rate_info, 
+                         const Currency& value_from, const Currency& value_to)
 {
-    std::cout << "[" << date << "] "<< value_from << " -> " << value_to << " " << std::endl;
+    std::cout << "[" << rate_info.date << "]" << " [rate: " << rate_info.rate << "] "
+                << value_from << " -> " << value_to << " " << std::endl;
 }
 
 bool process_arguments(int argc, char* argv[], ClArguments& args)
