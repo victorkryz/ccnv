@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
             {
                 const auto rate_info = rate_svc.rate(args.curr_from, args.curr_to);
 
-                auto [from, to] = rate_info.from_to;
+                const auto& [from, to] = rate_info.from_to;
                 Currency value_from(args.amount, from);
                 Currency value_to = Currency::convert(value_from, to, rate_info.rate);
 
@@ -60,9 +60,8 @@ int main(int argc, char* argv[])
 
 void print_currencies_list(const CurrencyRateService::CurrencyList& curr_list)
 {
-    for (const auto& item : curr_list)
+    for (const auto& [currency, country] : curr_list)
     {
-        auto [currency, country] = item;
         std::cout << currency << " : " << country << std::endl;
     }
 }
