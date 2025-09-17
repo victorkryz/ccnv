@@ -3,9 +3,6 @@ cmake_minimum_required(VERSION 3.14)
 set(app ccnv)
 project(${app})
 
-set(CMAKE_GENERATOR "Ninja")
-message("generator is set to ${CMAKE_GENERATOR}")
-
 set(CMAKE_CXX_STANDARD 17)
 
 set(CURL_INCLUDE_DIRS "")
