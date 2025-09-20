@@ -8,7 +8,7 @@ on:
       build_type:
         description: "Build configuration"
         required: true
-        default: "Release
+        default: "Release"
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
