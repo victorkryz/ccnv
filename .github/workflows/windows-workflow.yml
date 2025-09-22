@@ -1,0 +1,39 @@
+
+name: Windows, build and test
+
+on:
+ workflow_dispatch:
+    inputs:
+      build_type:
+        description: "Build configuration"
+        required: true
+        default: "Release"
+
+env:
+  BUILD_TYPE: Release
+  BUILD_CONFIGURATION: Release
+  BUILD_DIRECTORY: build
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Build 
+      run: |
+       cmake --version
+       cmake -S. -B ${{env.BUILD_DIRECTORY}} -A x64
+       cmake --build ${{github.workspace}}\${{env.BUILD_DIRECTORY}} --config ${{env.BUILD_CONFIGURATION}}
+       
+    - name: Test
+      working-directory: ${{github.workspace}}/${{env.BUILD_DIRECTORY}}/g.tests
+      run: ctest -V
+
+    - name: Run ccnv
+      working-directory: ${{github.workspace}}/${{env.BUILD_DIRECTORY}}
+      run: ${{env.BUILD_CONFIGURATION}}\ccnv -f usd -a 10 -t eur

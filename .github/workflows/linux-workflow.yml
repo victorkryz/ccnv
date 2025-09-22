@@ -1,0 +1,38 @@
+
+name: Linux, build and test
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_type:
+        description: "Build configuration"
+        required: true
+        default: "Release"
+
+env:
+  BUILD_TYPE: Release
+  BUILD_DIRECTORY: build
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: sudo apt-get install libcurl4-gnutls-dev
+
+    - name: Configure CMake
+      run: cmake -S. -B ${{github.workspace}}/${{env.BUILD_DIRECTORY}} -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/${{env.BUILD_DIRECTORY}} --config ${{env.BUILD_TYPE}}
+
+    - name: Test
+      working-directory: ${{github.workspace}}/${{env.BUILD_DIRECTORY}}/g.tests
+      run: ctest -V
+
+    - name: Run ccnv
+      working-directory: ${{github.workspace}}/${{env.BUILD_DIRECTORY}}
+      run: ./ccnv -f usd -a 10 -t eur
