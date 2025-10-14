@@ -10,9 +10,18 @@ set(CURL_LIBRARIES "")
 
 file(GLOB source_files RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} src/*.cpp src/*.h src/*.hpp src/*.c)
 
+include(FetchContent)
+
+# Fetch nlohmann_json
+FetchContent_Declare(
+        json
+        URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz
+)
+FetchContent_MakeAvailable(json)
+
+
 if(WIN32)
 
-    include(FetchContent)
     FetchContent_Declare(
         curl
         URL https://curl.se/windows/latest.cgi?p=win64-mingw.zip
@@ -34,7 +43,8 @@ add_executable(${app} ${source_files})
 
 target_include_directories(${app}   PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/external 
                                     PRIVATE ${CURL_INCLUDE_DIRS})
-target_link_libraries(${app} ${CURL_LIBRARIES})
+target_link_libraries(${app} ${CURL_LIBRARIES} 
+                              nlohmann_json::nlohmann_json)
 
 if(WIN32)
 
