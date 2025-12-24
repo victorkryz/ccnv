@@ -38,7 +38,7 @@ ccnv -f usd -a 25 -t uah
 ccnv --from bgn --amount 200 --to uah
 ```
 
-### Used third-party code:
+### Third-Party Libraries:
 
 - "Lightweight C++ command line option parser (https://github.com/jarro2783/cxxopts)
 -  Header-only nlohmann json  (https://github.com/nlohmann/json)
