@@ -17,8 +17,23 @@ FetchContent_Declare(
         json
         URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz
 )
-FetchContent_MakeAvailable(json)
 
+FetchContent_GetProperties(json)
+if (NOT json_POPULATED)
+    FetchContent_MakeAvailable(json)
+endif()
+
+
+FetchContent_Declare(
+    cxxopts
+    GIT_REPOSITORY https://github.com/jarro2783/cxxopts.git
+    GIT_TAG        v3.2.1  
+)
+
+FetchContent_GetProperties(cxxopts)
+if (NOT cxxopts_POPULATED)
+    FetchContent_MakeAvailable(cxxopts)
+endif()
 
 if(WIN32)
 
@@ -44,6 +59,7 @@ add_executable(${app} ${source_files})
 target_include_directories(${app}   PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src/external 
                                     PRIVATE ${CURL_INCLUDE_DIRS})
 target_link_libraries(${app} ${CURL_LIBRARIES} 
+                              cxxopts     
                               nlohmann_json::nlohmann_json)
 
 if(WIN32)
