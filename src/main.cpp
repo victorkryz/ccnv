@@ -1,7 +1,14 @@
-#include "curr_rate_svc.h"
-#include "cxxopts.hpp"
+
 #include <iostream>
 #include <string>
+
+#include "cxxopts.hpp"
+#include <fmt/core.h>
+
+#include "curr_rate_svc.h"
+
+constexpr auto app_name = APP_NAME;
+constexpr auto app_version = APP_VERSION;
 
 struct ClArguments
 {
@@ -130,12 +137,15 @@ std::pair<int, bool> process_arguments(int argc, char* argv[], ClArguments& args
 
 void show_usage(const cxxopts::Options& options)
 {
-    const char* samples_of_using =
+    const char* samples_of_using_templ =
         R"(Command line samples:
-    ccnv -l 
-    ccnv -f eur -t usd
-    ccnv -f usd -a 10 -t eur 
-    ccnv -f usd -a 25 -t uah)";
+    {app_name} -l 
+    {app_name} -f eur -t usd
+    {app_name} -f usd -a 10 -t eur 
+    {app_name}v -f usd -a 25 -t uah)";
+
+    std::string samples_of_using =
+        fmt::format(samples_of_using_templ, fmt::arg("app_name", app_name));
 
     std::string help = options.help();
     std::cout << std::endl
@@ -146,5 +156,6 @@ void show_usage(const cxxopts::Options& options)
 
 void show_version()
 {
-    std::cout << "ccnv version 1.0" << std::endl;
+    std::string version = fmt::format("{} version {}", app_name, app_version);
+    std::cout << version << std::endl;
 }
