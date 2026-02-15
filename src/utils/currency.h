@@ -1,10 +1,10 @@
 #pragma once
 
 #include <cmath>
-#include <stdexcept>
-#include <iostream>
 #include <cstdint>
 #include <iomanip>
+#include <iostream>
+#include <stdexcept>
 
 class Currency
 {
