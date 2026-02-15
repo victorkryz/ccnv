@@ -23,7 +23,7 @@ void show_usage(const cxxopts::Options& options);
 void show_version();
 void print_currencies_list(const CurrencyRateService::CurrencyList& list);
 void print_rating_result(const CurrencyRateService::CurrencyRate& rate_info,
-                        const Currency& value_from, const Currency& value_to);
+                         const Currency& value_from, const Currency& value_to);
 
 int main(int argc, char* argv[])
 {
@@ -78,17 +78,17 @@ void print_currencies_list(const CurrencyRateService::CurrencyList& curr_list)
     }
 }
 
-void print_rating_result(const CurrencyRateService::CurrencyRate& rate_info, 
+void print_rating_result(const CurrencyRateService::CurrencyRate& rate_info,
                          const Currency& value_from, const Currency& value_to)
 {
     std::cout << "[" << rate_info.date << "]" << " [rate: " << rate_info.rate << "] "
-                << value_from << " -> " << value_to << " " << std::endl;
+              << value_from << " -> " << value_to << " " << std::endl;
 }
 
 std::pair<int, bool> process_arguments(int argc, char* argv[], ClArguments& args)
 {
     std::pair<int, bool> result = {0, false};
-    auto& [exit_code, usage ] = result;
+    auto& [exit_code, usage] = result;
 
     try
     {
@@ -96,7 +96,7 @@ std::pair<int, bool> process_arguments(int argc, char* argv[], ClArguments& args
         options.positional_help("[optional args]")
             .show_positional_help();
 
-        // clang-format off     
+        // clang-format off
         options.add_options()("l, list", "list all available currencies", 
                              cxxopts::value<bool>(args.show_curr_list))
                              ("f, from", "currency convert from (usd, eur, ...)", 
@@ -119,8 +119,8 @@ std::pair<int, bool> process_arguments(int argc, char* argv[], ClArguments& args
         {
             show_version();
         }
-        else if ( !(parsed_args.count("list") || 
-                    (parsed_args.count("from") && parsed_args.count("to"))))
+        else if (!(parsed_args.count("list") ||
+                   (parsed_args.count("from") && parsed_args.count("to"))))
             exit_code = 1;
 
         if (usage || exit_code)
@@ -151,7 +151,8 @@ void show_usage(const cxxopts::Options& options)
     std::cout << std::endl
               << help << std::endl;
 
-    std::cout << samples_of_using << std::endl << std::endl;
+    std::cout << samples_of_using << std::endl
+              << std::endl;
 }
 
 void show_version()
