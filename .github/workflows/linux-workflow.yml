@@ -12,6 +12,7 @@ on:
 env:
   BUILD_TYPE: Release
   BUILD_DIRECTORY: build
+  INSTALL_DIRECTORY: dist
 
 jobs:
   build:
@@ -28,11 +29,14 @@ jobs:
 
     - name: Build
       run: cmake --build ${{github.workspace}}/${{env.BUILD_DIRECTORY}} --config ${{env.BUILD_TYPE}}
-
+    
     - name: Test
       working-directory: ${{github.workspace}}/${{env.BUILD_DIRECTORY}}/g.tests
       run: ctest -V
 
+    - name: Install
+      run: cmake --install ${{github.workspace}}/${{env.BUILD_DIRECTORY}} --prefix ${{github.workspace}}/${{env.INSTALL_DIRECTORY}}
+
     - name: Run ccnv
-      working-directory: ${{github.workspace}}/${{env.BUILD_DIRECTORY}}
-      run: ./ccnv -f usd -a 10 -t eur
+      working-directory: ${{github.workspace}}/${{env.INSTALL_DIRECTORY}}
+      run: bin/ccnv -f usd -a 10 -t eur
