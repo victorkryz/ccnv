@@ -142,7 +142,7 @@ void show_usage(const cxxopts::Options& options)
     {app_name} -l 
     {app_name} -f eur -t usd
     {app_name} -f usd -a 10 -t eur 
-    {app_name}v -f usd -a 25 -t uah)";
+    {app_name} -f usd -a 25 -t uah)";
 
     std::string samples_of_using =
         fmt::format(samples_of_using_templ, fmt::arg("app_name", app_name));
