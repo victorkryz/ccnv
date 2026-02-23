@@ -13,6 +13,7 @@ env:
   BUILD_TYPE: Release
   BUILD_CONFIGURATION: Release
   BUILD_DIRECTORY: build
+  INSTALL_DIRECTORY: dist
 
 permissions:
   contents: read
@@ -34,6 +35,9 @@ jobs:
       working-directory: ${{github.workspace}}/${{env.BUILD_DIRECTORY}}/g.tests
       run: ctest -V
 
+    - name: Install
+      run: cmake --install ${{github.workspace}}/${{env.BUILD_DIRECTORY}} --prefix ${{github.workspace}}/${{env.INSTALL_DIRECTORY}}
+
     - name: Run ccnv
-      working-directory: ${{github.workspace}}/${{env.BUILD_DIRECTORY}}
-      run: ${{env.BUILD_CONFIGURATION}}\ccnv -f usd -a 10 -t eur
+      working-directory: ${{github.workspace}}/${{env.INSTALL_DIRECTORY}}
+      run: bin\ccnv -f usd -a 10 -t eur
