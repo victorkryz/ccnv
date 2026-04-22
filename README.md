@@ -42,6 +42,9 @@ ccnv --from bgn --amount 200 --to uah
 
 - "Lightweight C++ command line option parser (https://github.com/jarro2783/cxxopts)
 -  Header-only nlohmann json  (https://github.com/nlohmann/json)
+-  For Linux OS libcurl development package is required   
+   (e.g. on Debian-based systems: sudo apt install libcurl4-openssl-dev)
+
 
 
 ### How to build:
