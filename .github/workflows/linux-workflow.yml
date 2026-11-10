@@ -37,6 +37,17 @@ jobs:
     - name: Install
       run: cmake --install ${{github.workspace}}/${{env.BUILD_DIRECTORY}} --prefix ${{github.workspace}}/${{env.INSTALL_DIRECTORY}}
 
+    - name: Integration test
+      working-directory: ${{github.workspace}}/${{env.INSTALL_DIRECTORY}}
+      run: |
+        export USD_RATE=$(bin/ccnv -f usd -a 100 -t usd | awk -F ': ' '{print $2}' | awk -F ']' '{print $1}')
+        echo "USD_RATE: $USD_RATE"
+        if [[ "${USD_RATE}" == "1.0"  || "${USD_RATE}" == "1" ]]; then
+           exit 0
+        else
+           exit 1
+        fi  
+
     - name: Run ccnv
       working-directory: ${{github.workspace}}/${{env.INSTALL_DIRECTORY}}
       run: bin/ccnv -f usd -a 10 -t eur
